@@ -36,12 +36,16 @@ function MobileLinkView(props) {
 
         props.linkChecker(token);
         props.getIcon(token)
-        props.getPubliclink({profile_name:pageLink})
+        props.getPubliclink(pageLink);
 
     }, [props.load, props.checked]);
 
-    console.log(links);
+    if(props.getPublicLinkRes){
 
+        console.log(props.getPublicLinkRes.data.settings.icons_position);
+
+
+    }
     // edit delet function
     const [vDiag, setVdiag] = useState({delete: false, edit: false});
 
@@ -206,36 +210,40 @@ function MobileLinkView(props) {
 
                         {/* above icons */}
                         {
+<>{props.getPublicLinkRes && (
+    <>{
+        props.iconsRes && props.getPublicLinkRes.data.settings.icons_position === "below" ? (
+            <> {
+                props.iconsRes.links.map((el, i) => {
+                    return (
+                        <>
+                            <a href={
+                                    `http://${
+                                        el.original_url
+                                    }`
+                                }
+                                target="_blank">
+                                <span>
+                                    <i className={
+                                        `${
+                                            el.css
+                                        } icons-links`
+                                    }></i>
+                                </span>
+                            </a>
 
-                        props.iconsRes && ! props.checked ? (
-                            <> {
-                                props.iconsRes.links.map((el, i) => {
-                                    return (
-                                        <>
-                                            <a href={
-                                                    `http://${
-                                                        el.original_url
-                                                    }`
-                                                }
-                                                target="_blank">
-                                                <span>
-                                                    <i className={
-                                                        `${
-                                                            el.css
-                                                        } icons-links`
-                                                    }></i>
-                                                </span>
-                                            </a>
+                        </>
+                    )
+                })
+            } </>
+        ) : (
+            <p style={
+                {"textAlign": "center"}
+            }></p>
+        )
 
-                                        </>
-                                    )
-                                })
-                            } </>
-                        ) : (
-                            <p style={
-                                {"textAlign": "center"}
-                            }></p>
-                        )
+    }</>
+)}</>
                     }
 
 
@@ -338,7 +346,7 @@ function MobileLinkView(props) {
 
 
 const mapStateToProps = (state) => {
-    return {links: state.links.links, iconsRes: state.links.iconList, delRes: state.links.delLinkRes}
+    return {links: state.links.links, iconsRes: state.links.iconList, delRes: state.links.delLinkRes,getPublicLinkRes:state.links.getPublicLinkRes}
 }
 
 const mapDispatchToProps = (dispatch) => {

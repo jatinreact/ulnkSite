@@ -375,14 +375,12 @@ export const getPublicLinks=(u_name)=>{
 
     try{
         
-          const response = await fetch(getBaseUrl() + "pub/links", {
+          const response = await fetch(getBaseUrl() + "pub/links/"+u_name, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
 
             },
-            
-            body:JSON.stringify({"profile_name":"user4"})
         })
 
         console.log("called");
