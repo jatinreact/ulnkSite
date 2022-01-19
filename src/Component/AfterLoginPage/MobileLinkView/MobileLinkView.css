@@ -1,0 +1,118 @@
+.side_phone_width {
+  width: 60%;
+  background-color: red;
+}
+.phone_view_width {
+    text-align: center !important;
+    width: 300px;
+    margin: auto;
+    
+  }
+  .icons-links{
+    margin-left: 20px;
+    color: #50d3cb;
+  }
+  .links-editable{
+    padding-top: -20px;
+    color:black;
+      
+  }
+  .links-editable i{
+    background-color: #50d3cb;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .links-editable i:nth-child(2){
+margin-left: 20px;
+  }
+  .links-div{
+    background-color: black;
+margin-bottom: 20px;
+    border: 1px solid white;
+    padding: 10px;
+    padding-top: 15px;
+    border-radius: 20px;
+  }
+
+.dialogBox-Links{
+  background-color:#00000099;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  left: 0px;
+  z-index: 9999;
+}  
+.link-delete-diag{
+    background-color: #50d3cb;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    width: 290px;
+    height: 120px;
+
+    text-align: center;
+   position: fixed;
+   top: 50%;
+left: 35%;
+    
+  }
+  
+  .link-delete-diag p{
+  font-weight: bold;
+  }
+  .link-delete-diag button:nth-child(2){
+    background-color: black;
+    color: red;
+    border:1px solid red;
+    
+  }
+  .link-delete-diag button:nth-child(3){
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    width: 50px;
+    margin-left: 10px;
+    padding: 2px;
+  }
+
+  .link-edit-diag{
+    background-color: #50d3cb;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    width: 290px;
+    height: 170px;
+
+    text-align: center;
+   position: fixed;
+   top: 50%;
+left: 35%;
+   
+  }
+
+  .link-edit-diag input{
+    margin-top: 10px;
+  }
+
+  .link-edit-diag button{
+    margin-top: 10px;
+  }
+
+  .link-edit-diag button:nth-child(3){
+    background-color: black;
+    color: red;
+    border:1px solid red;
+    
+  }
+  .link-edit-diag button:nth-child(4){
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    width: 50px;
+    margin-left: 10px;
+    padding: 2px;
+  }
+  
+  
