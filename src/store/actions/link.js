@@ -276,8 +276,9 @@ export const updateLink=(token,req)=>{
         
         dispatch(updateLinkSuccess(data));
 
-     dispatch(getIcon(token));
+        
      dispatch(LinkChecker(token));
+     dispatch(getIcon(token));
 
     }catch(err){
         dispatch(updateLinkFail(err.message));
@@ -309,7 +310,7 @@ export const aboveLinkFail=(err)=>{
     }
 }
 
-export const aboveLink=(token,what)=>{
+export const aboveLink=(token,what,u_name)=>{
     return async(dispatch)=>{
         dispatch(aboveLinkStart());
         console.log(token);
@@ -333,9 +334,7 @@ export const aboveLink=(token,what)=>{
         }
         
         dispatch(aboveLinkSuccess(data));
-
-     dispatch(getIcon(token));
-     dispatch(LinkChecker(token));
+     dispatch(getPublicLinks(token,u_name));
 
     }catch(err){
         dispatch(aboveLinkFail(err.message));
@@ -368,7 +367,7 @@ export const getPublicLinksFail=(err)=>{
     }
 }
 
-export const getPublicLinks=(u_name)=>{
+export const getPublicLinks=(token,u_name)=>{
     return async(dispatch)=>{
         dispatch(getPublicLinksStart());
         
@@ -383,7 +382,7 @@ export const getPublicLinks=(u_name)=>{
             },
         })
 
-        console.log("called");
+        console.log("called get public links");
         const data = await response.json(); 
         
         if(response.ok !== true){
@@ -398,3 +397,4 @@ export const getPublicLinks=(u_name)=>{
     }
     }
 }
+

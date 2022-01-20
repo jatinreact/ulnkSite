@@ -81,11 +81,11 @@ const Register = (props) => {
                 .post(url, fd)
                 .then(
                     (res) => {
-                        console.log("register res", res)
+                        console.log("register res", res.data.loginToken);
                         showNotificationMsz(res.data.msg, "success")
                         localStorage.setItem("userId", res.data.user._id)
                         localStorage.setItem("userName", res.data.user.profile_name)
-                        localStorage.setItem("token", res.data.token)
+                        localStorage.setItem("token", res.data.loginToken)
                         if (res.data.token !== "") {
                             localStorage.setItem("isAuth", true)
                         }

@@ -258,13 +258,16 @@ const setIconFunc=()=>{
 //checkboxfunc
 const[checked,setChecked]=useState(false);
 
+let u_name = localStorage.getItem("userName");
 const checkBoxFunc=(e)=>{
     
  if(e.target.value === "option1"){
      setChecked(true);
-     props.aboveLink(token,{icons_position:"above"})
+     props.aboveLink(token,{icons_position:"above"},u_name);
+     showNotificationMsz("icons are above","success");
  }else{
-    props.aboveLink(token,{icons_position:"below"})
+    props.aboveLink(token,{icons_position:"below"},u_name);
+    showNotificationMsz("icons are below","success");
  }
 }
 
@@ -444,7 +447,7 @@ const checkBoxFunc=(e)=>{
                             </div>
                         </Grid>
                         <Grid item md={5} className="p-3">
-                            <MobileLinkView  load={load} checked={checked}/>
+                            <MobileLinkView  load={load} checked={checked} hideEdit={"from component"}/>
                         </Grid>
                     </Grid>
                 </div >
@@ -528,14 +531,16 @@ function a11yProps(index) {
 
 const mapStateToProps=(state)=>{
     return{
-        links:state.links.links
+        links:state.links.links,
+        
+        abovelinkRes:state.links.abovelinkRes
     }
 }
 
 const mapDispatchToProps=(dispatch)=>{
     return{
         setIcon:(token,data)=>dispatch(actionCreator.setIcon(token,data)),
-        aboveLink:(toke,data)=>dispatch(actionCreator.aboveLink(toke,data)),
+        aboveLink:(toke,data,u_name)=>dispatch(actionCreator.aboveLink(toke,data,u_name)),
     }
 }
 

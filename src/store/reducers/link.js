@@ -9,6 +9,7 @@ const initialState = {
     delLinkRes: null,
     updLinkRes: null,
     abovelinkRes: null,
+    editProfileRes:null,
     getPublicLinkRes:null,
     loading: false,
     error: null
@@ -152,6 +153,35 @@ export const updateLinkSuccess = (state, action) => {
 }
 
 export const updateLinkFail = (state, action) => {
+    return {
+        ...state,
+        loading: false,
+        error: action.err
+    }
+}
+
+
+export const editProfileStart = (state, action) => {
+    return {
+        ...state,
+        loading: true,
+        error: null,
+        updLinkRes: null
+    }
+}
+
+export const editProfileSuccess = (state, action) => {
+    return {
+        ...state,
+        loading: false,
+        updLinkRes: action.data,
+        error: null
+    }
+
+
+}
+
+export const editProfileFail = (state, action) => {
     return {
         ...state,
         loading: false,

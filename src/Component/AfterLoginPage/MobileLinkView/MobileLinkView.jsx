@@ -6,13 +6,13 @@ import {getBaseUrl} from "../../../utils/index";
 import Loder from '../../../Loder/Loder';
 import * as actionCreator from "../../../store/actions/link";
 import {connect} from "react-redux";
-
+import {showNotificationMsz} from "../../../utils/Validation";
 function MobileLinkView(props) {
 
 
     const token = localStorage.getItem("token");
-
-    let pageLink = localStorage.getItem("userName");
+console.log("token",token);
+    let userName = localStorage.getItem("userName");
 
     const [links, setLinks] = useState();
 
@@ -31,21 +31,20 @@ function MobileLinkView(props) {
 
     }
 
+    if(props.getPublicLinkRes){
+console.log(props.getPublicLinkRes.data.settings.icons_position)
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0);
 
         props.linkChecker(token);
         props.getIcon(token)
-        props.getPubliclink(pageLink);
+        props.getPubliclink(token,userName);
+        
 
-    }, [props.load, props.checked]);
+    }, [props.load, props.checked,props.delRes]);
 
-    if(props.getPublicLinkRes){
-
-        console.log(props.getPublicLinkRes.data.settings.icons_position);
-
-
-    }
     // edit delet function
     const [vDiag, setVdiag] = useState({delete: false, edit: false});
 
@@ -85,6 +84,8 @@ function MobileLinkView(props) {
             ...vDiag,
             delete: false
         });
+
+        showNotificationMsz("link deleted!","success");
     }
     // edit form'
     const [form, setForm] = useState({title: "", url: ""})
@@ -107,10 +108,22 @@ function MobileLinkView(props) {
             url: form.url,
             linkId: id
         }
-
+        setVdiag({
+            ...vDiag,
+            edit: false
+        });
         props.updateLink(token, data);
+        
+        showNotificationMsz("link edited!","success");
 
     }
+
+    //notifications
+
+    // delete
+
+    
+
     return (
         <> {/* edit delete dialog box */}
             {
@@ -168,11 +181,11 @@ function MobileLinkView(props) {
             <div className="p-2 userdaboard_color d-flex justify-content-between">
                 <div className="add_link_heading">MY ULNK HUB LINK:
                     <br/><a href={
-                            `/${pageLink}`
+                            `/${userName}`
                         }
                         target="_blank">
                         <span className="link_color">
-                            {pageLink}</span>
+                            {userName}</span>
                     </a>
                 </div>
                 <div className="add_link_heading">
@@ -200,7 +213,7 @@ function MobileLinkView(props) {
                                 alt=""
                                 className="user_Image"/>
                         </div>
-                        <div>User Name</div>
+                        <div>{userName}</div>
 
 
                     </div>
@@ -212,7 +225,7 @@ function MobileLinkView(props) {
                         {
 <>{props.getPublicLinkRes && (
     <>{
-        props.iconsRes && props.getPublicLinkRes.data.settings.icons_position === "below" ? (
+        props.iconsRes && props.getPublicLinkRes.data.settings.icons_position === "above" ? (
             <> {
                 props.iconsRes.links.map((el, i) => {
                     return (
@@ -270,9 +283,9 @@ function MobileLinkView(props) {
                                                     el.title
                                                 }</p>
                                             </a>
-
-
-                                            <div className='links-div'>
+{
+    props.hideEdit && (<>
+     <div className='links-div'>
                                                 <span className='links-editable'>
                                                     <i className='fa fa-trash'
                                                         onClick={
@@ -292,6 +305,10 @@ function MobileLinkView(props) {
                                             </span>
                                         </div>
 
+    </>)
+}
+
+                                           
 
                                     </>
                                     )
@@ -304,39 +321,46 @@ function MobileLinkView(props) {
                         )
                     }
 
-                        {/* icons */}
+                    {/* above icons */}
+                    {
+<>{props.getPublicLinkRes && (
+    <>{
+        props.iconsRes && props.getPublicLinkRes.data.settings.icons_position === "below" ? (
+            <> {
+                props.iconsRes.links.map((el, i) => {
+                    return (
+                        <>
+                            <a href={
+                                    `http://${
+                                        el.original_url
+                                    }`
+                                }
+                                target="_blank">
+                                <span>
+                                    <i className={
+                                        `${
+                                            el.css
+                                        } icons-links`
+                                    }></i>
+                                </span>
+                            </a>
 
-                        {
+                        </>
+                    )
+                })
+            } </>
+        ) : (
+            <p style={
+                {"textAlign": "center"}
+            }></p>
+        )
 
-                        props.iconsRes && props.checked ? (
-                            <> {
-                                props.iconsRes.links.map((el, i) => {
-                                    return (
-                                        <>
-                                            <a href={
-                                                    `http://${
-                                                        el.original_url
-                                                    }`
-                                                }
-                                                target="_blank">
-                                                <span>
-                                                    <i className={
-                                                        `${
-                                                            el.css
-                                                        } icons-links`
-                                                    }></i>
-                                                </span>
-                                            </a>
-                                        </>
-                                    )
-                                })
-                            } </>
-                        ) : (
-                            <p style={
-                                {"textAlign": "center"}
-                            }></p>
-                        )
-                    } </div>
+    }</>
+)}</>
+                    }
+
+
+                         </div>
                 </div>
 
             </div>
@@ -346,7 +370,13 @@ function MobileLinkView(props) {
 
 
 const mapStateToProps = (state) => {
-    return {links: state.links.links, iconsRes: state.links.iconList, delRes: state.links.delLinkRes,getPublicLinkRes:state.links.getPublicLinkRes}
+    return {
+        links: state.links.links, 
+        iconsRes: state.links.iconList, 
+        delRes: state.links.delLinkRes,
+        getPublicLinkRes:state.links.getPublicLinkRes,
+        abovelinkRes:state.links.abovelinkRes
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -355,7 +385,7 @@ const mapDispatchToProps = (dispatch) => {
         getIcon: (token) => dispatch(actionCreator.getIcon(token)),
         deleteLink: (token, id) => dispatch(actionCreator.deleteLink(token, id)),
         updateLink: (token, data) => dispatch(actionCreator.updateLink(token, data)),
-        getPubliclink: (u_name) => dispatch(actionCreator.getPublicLinks(u_name))
+        getPubliclink: (token,u_name) => dispatch(actionCreator.getPublicLinks(token,u_name))
     }
 }
 

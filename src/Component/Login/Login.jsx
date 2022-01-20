@@ -62,7 +62,7 @@ const Login = (props) => {
                 .post(url, temp)
                 .then(
                     (res) => {
-                        console.log("res", res)
+                        console.log("res", res.data.loginToken)
 
                         showNotificationMsz(res.data.msg, "success")
                         localStorage.setItem("userId", res.data.user._id)
