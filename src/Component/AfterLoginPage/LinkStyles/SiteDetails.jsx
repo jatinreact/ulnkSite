@@ -45,11 +45,13 @@ function SiteDetails(props) {
         let data;
 data={
     profile_photo:file,
-    profile_title:"developer",
+    profile_title:"aj7",
     visible:isHidden,
+    bio:rteValue.toString('html'),
 }
 props.editProfile(token,data);
     }
+
 
     return (
         <>
@@ -147,7 +149,7 @@ props.editProfile(token,data);
                                 <Button
                                     variant="contained"
                                     className="button_formatting"
-                                    // onClick={func}
+                                    onClick={editProfileFunc}
                                 >
                                     Save
                                 </Button>

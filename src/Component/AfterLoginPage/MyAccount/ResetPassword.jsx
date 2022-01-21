@@ -51,7 +51,7 @@ const ResetPassword = (props) => {
                     },
                     (error) => {
                         showNotificationMsz(`${error}`, "danger")
-                        console.log("data response error:::", error)
+                    
                         setisloading(false)
                     }
                 )
@@ -59,7 +59,7 @@ const ResetPassword = (props) => {
         } catch (error) {
             showNotificationMsz(`${error}`, "danger")
             setisloading(false)
-            console.log("data response error:::", error)
+            
         }
     }
 

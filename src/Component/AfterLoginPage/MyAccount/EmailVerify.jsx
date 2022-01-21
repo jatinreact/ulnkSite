@@ -49,7 +49,7 @@ const VerifyEmail = (props) => {
                     },
                     (error) => {
                         showNotificationMsz(`${error}`, "danger")
-                        console.log("data response error:::", error)
+                    
                         setisloading(false)
                     }
                 )
@@ -57,7 +57,7 @@ const VerifyEmail = (props) => {
         } catch (error) {
             showNotificationMsz(`${error}`, "danger")
             setisloading(false)
-            console.log("data response error:::", error)
+            
         }
     }
 

@@ -19,7 +19,7 @@ import AddIcons from "./Component/EditProfile/AddIcons";
 import LinkStyles from "./Component/AfterLoginPage/LinkStyles/LinkStyles";
 import Register from "./Component/Login/Register";
 
-import MobileLinkView from "./Component/AfterLoginPage/MobileLinkView/MobileLinkView";
+import PublicMobileLinkView from "./Component/AfterLoginPage/MobileLinkView/PublicMobileLinkView";
 
 //for notification
 import ReactNotification from "react-notifications-component";
@@ -46,7 +46,6 @@ function App() {
         <Route exact path="/email-verify" component={EmailVerify} />
         <Route exact path="/reset-password" component={ResetPassword} />
 
-
         {/*After login Page*/}
         <Route exact path="/add-links" component={AddLinks} />
         <Route exact path="/my-account" component={MyAccount} />
@@ -54,7 +53,7 @@ function App() {
         <Route exact path="/setting" component={Setting} />
         <Route exact path="/statistics" component={Statistics} />
         <Route exact path="/styles" component={LinkStyles} />
-        <Route exact path="/:u_name" component={MobileLinkView}/>
+        <Route exact path="/:u_name" component={PublicMobileLinkView}/>
       </Switch>
     </>
   );

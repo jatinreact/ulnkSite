@@ -7,43 +7,22 @@ import Loder from '../../../Loder/Loder';
 import * as actionCreator from "../../../store/actions/link";
 import {connect} from "react-redux";
 import {showNotificationMsz} from "../../../utils/Validation";
-function MobileLinkView(props) {
+function PublicMobileLinkView(props) {
 
-
+    let profile_name=props.location.pathname.split("/")[1]
+console.log(profile_name);
     const token = localStorage.getItem("token");
 
-    let userName = localStorage.getItem("PageLink");
 
-    const [links, setLinks] = useState();
 
-    const getLinks = async () => {
-        const response = await fetch(getBaseUrl() + "links/link-list", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "bearer " + token
-            }
-        })
-
-        const data = await response.json();
-
-        setLinks(data);
-
-    }
-
-    if(props.getPublicLinkRes){
-
-    }
-
+   
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        props.linkChecker(token);
-        props.getIcon(token)
-        props.getPubliclink(token,userName);
+        props.getPubliclink(token,profile_name);
         
 
-    }, [props.load, props.checked,props.delRes]);
+    }, []);
 
     // edit delet function
     const [vDiag, setVdiag] = useState({delete: false, edit: false});
@@ -121,14 +100,53 @@ function MobileLinkView(props) {
     //notifications
 
     // delete
-
+// const func=()=>{
+//     let icons;
+//     if(props.getPublicLinkRes){
+//          icons = props.getPublicLinkRes.data.links.find((link) => {
+//             return   link.title === 'icon'
+//          })
+//     }
+   
+//     console.log(icons);
+// }
     
+if(props.getPublicLinkRes){
+    console.log(props.getPublicLinkRes.data.settings.user);
+    console.log(props.getPublicLinkRes.data.links[0],props.getPublicLinkRes.data.links[1])
+    }
 
+    //html parser
+
+    let stringToHTML = function (str) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(str, 'text/html');
+        return doc.body;
+    };
+
+    // const[bio,setBio]=useState("");
+    let html="";
+    if(props.getPublicLinkRes){
+        html=stringToHTML(props.getPublicLinkRes.data.settings.user.bio);
+    }
+
+    console.log(html);
+
+   const getBio=(html)=>{
+        return (
+            html
+        );
+      }
+
+      console.log(getBio(html))
+
+    // console.log(bio);
+    
     return (
         <> {/* edit delete dialog box */}
             {
             vDiag.delete && (
-                <div className='dialogBox-Links'>
+                <div className='dialogBox-Links' >
                     <div className='link-delete-diag'>
                         <p>Are you sure,do you want to delete?</p>
                         <button onClick={
@@ -178,14 +196,14 @@ function MobileLinkView(props) {
         }
 
 
-            <div className="p-2 userdaboard_color d-flex justify-content-between">
-                <div className="add_link_heading">MY ULNK HUB LINK:
+            <div className="p-2 userdaboard_color d-flex justify-content-between" >
+                <div className="add_link_heading" >MY ULNK HUB LINK:
                     <br/><a href={
-                            `/${userName}`
+                            `/${profile_name}`
                         }
                         target="_blank">
                         <span className="link_color">
-                            {userName}</span>
+                            {profile_name}</span>
                     </a>
                 </div>
                 <div className="add_link_heading">
@@ -206,31 +224,84 @@ function MobileLinkView(props) {
             <div className='phone_view_width'>
                 <div className="phoneborder_afterlogin p-2 mt-5">
 
+<>{
+    props.getPublicLinkRes && (
+        <>{
+            props.getPublicLinkRes.data.settings.user.image  ? (
+                <>
+                <div className="text-center">
+                        <div className="mt-3">
+                            <img src={props.getPublicLinkRes.data.settings.user.image}
+                                alt=""
+                                className="user_Image"/>
+                        </div>
+                        <div>{props.getPublicLinkRes.data.settings.user.profile_title}</div>
 
-                    <div className="text-center">
+
+                    </div>
+
+                </>
+            ) : (<>
+            <div className="text-center">
                         <div className="mt-3">
                             <img src={user}
                                 alt=""
                                 className="user_Image"/>
                         </div>
-                        <div>{userName}</div>
+                        <div>{profile_name}</div>
 
 
                     </div>
 
+            </>)
+        }</>
+    )
+}</>
+                    
+                    {props.getPublicLinkRes && props.getPublicLinkRes.data.settings.user.bio && props.getPublicLinkRes.data.settings.user.bio === "<p><br></p>" && (<>
+                        <p>{getBio}</p>
+                    </>)}
 
                     <div className="mt-2 p-2 linkoverflow_scroll mobile-view">
-
-                        {/* above icons */}
                         {
-<>{props.getPublicLinkRes && (
-    <>{
-        props.iconsRes && props.getPublicLinkRes.data.settings.icons_position === "above" ? (
-            <> {
-                props.iconsRes.links.map((el, i) => {
-                    return (
-                        <>
-                            <a href={
+                            props.getPublicLinkRes && (
+<>
+{
+   
+    props.getPublicLinkRes.data.settings.icons_position === "above" ? (<>
+    {
+        
+         props.getPublicLinkRes.data.links[1].links.map((el,ind)=>{
+             return(
+                <a key={ind} href={
+                    `http://${
+                        el.original_url
+                    }`
+                }
+                target="_blank">
+                <p className='add_new_link_btn '
+                    style={
+                        {"borderRadius": "20px"}
+                }>
+                    {
+                    el.title
+                }</p>
+            </a>
+             )
+         })
+    }
+    </>):(
+    
+    <>
+    {
+        console.log("below sec")
+    }
+          {
+              
+              props.getPublicLinkRes.data.links[1].links.map((el,ki)=>{
+                  return (
+                      <>
+                       <a key={ki} href={
                                     `http://${
                                         el.original_url
                                     }`
@@ -244,93 +315,47 @@ function MobileLinkView(props) {
                                     }></i>
                                 </span>
                             </a>
-
-                        </>
-                    )
-                })
-            } </>
-        ) : (
-            <p style={
-                {"textAlign": "center"}
-            }></p>
-        )
-
-    }</>
-)}</>
-                    }
-
-
-                        {
-
-
-                        props.links ? (
-                            <> {
-                                props.links.links.map((el, i) => {
-                                    return (
-                                        <>
-
-                                            <a href={
-                                                    `http://${
-                                                        el.original_url
-                                                    }`
-                                                }
-                                                target="_blank">
-                                                <p className='add_new_link_btn '
-                                                    style={
-                                                        {"borderRadius": "20px"}
-                                                }>
-                                                    {
-                                                    el.title
-                                                }</p>
-                                            </a>
-{
-    props.hideEdit && (<>
-     <div className='links-div'>
-                                                <span className='links-editable'>
-                                                    <i className='fa fa-trash'
-                                                        onClick={
-                                                            () => editDeleteFunc("delete", el._id)
-                                                    }></i>
-                                                    <i className='fa fa-edit'
-                                                        onClick={
-                                                            () => {
-                                                                editDeleteFunc("edit", el._id);
-                                                                setForm({
-                                                                    ...form,
-                                                                    title: el.title,
-                                                                    url: el.original_url
-                                                                })
-                                                            }
-                                                    }></i>
-                                            </span>
-                                        </div>
-
+</>
+                  )
+              })
+          }
     </>)
 }
 
-                                           
+</>)}
 
-                                    </>
-                                    )
-                                })
-                            } </>
-                        ) : (
-                            <p style={
-                                {"textAlign": "center"}
-                            }>No result found!</p>
-                        )
-                    }
-
-                    {/* above icons */}
+{/* second section */}
+{
+                            props.getPublicLinkRes && (
+<>
+{
+    props.getPublicLinkRes.data.settings.icons_position === "below" ? (<>
+    {
+         props.getPublicLinkRes.data.links[0].links.map((el,kk)=>{
+             return(
+                <a key={kk} href={
+                    `http://${
+                        el.original_url
+                    }`
+                }
+                target="_blank">
+                <p className='add_new_link_btn '
+                    style={ 
+                        {"borderRadius": "20px"}
+                }>
                     {
-<>{props.getPublicLinkRes && (
-    <>{
-        props.iconsRes && props.getPublicLinkRes.data.settings.icons_position === "below" ? (
-            <> {
-                props.iconsRes.links.map((el, i) => {
-                    return (
-                        <>
-                            <a href={
+                    el.title
+                }</p>
+            </a>
+             )
+         })
+    }
+    </>):(<>
+          {
+              props.getPublicLinkRes.data.links[0].links.map((el,ii)=>{
+                  return (
+                      <>
+                       <a key={ii} href={
                                     `http://${
                                         el.original_url
                                     }`
@@ -344,23 +369,16 @@ function MobileLinkView(props) {
                                     }></i>
                                 </span>
                             </a>
+</>
+                  )
+              })
+          }
+    </>)
+}
 
-                        </>
-                    )
-                })
-            } </>
-        ) : (
-            <p style={
-                {"textAlign": "center"}
-            }></p>
-        )
+</>)}
 
-    }</>
-)}</>
-                    }
-
-
-                         </div>
+                                             </div>
                 </div>
 
             </div>
@@ -389,4 +407,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MobileLinkView)
+export default connect(mapStateToProps, mapDispatchToProps)(PublicMobileLinkView)

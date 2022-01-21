@@ -10,7 +10,7 @@ export const linkCheckerStart=()=>{
 }
 
 export const linkCheckerSuccess=(data)=>{
-    console.log(data);
+
     return{
         type:actionTypes.LINK_CHECKER_SUCCESS,
         data:data
@@ -63,7 +63,7 @@ export const setIconStart=()=>{
 }
 
 export const setIconSuccess=(data)=>{
-    console.log(data);
+    
     return{
         type:actionTypes.SET_ICON_SUCCESS,
         data:data
@@ -121,7 +121,7 @@ export const getIconStart=()=>{
 }
 
 export const getIconSuccess=(data)=>{
-    console.log(data);
+    
     return{
         type:actionTypes.GET_ICON_SUCCESS,
         data:data
@@ -195,7 +195,7 @@ export const deleteLinkFail=(err)=>{
 export const deleteLink=(token,id)=>{
     return async(dispatch)=>{
         dispatch(deleteLinkStart());
-        console.log(token,id);
+        
 
     try{
           const response = await fetch(getBaseUrl() + "links/", {
@@ -210,7 +210,7 @@ export const deleteLink=(token,id)=>{
         })
 
         const data = await response.json(); 
-        console.log(response)
+        
         if(response.ok !== true){
             throw Error("Something went wrong!")
         }
@@ -254,7 +254,7 @@ export const updateLinkFail=(err)=>{
 export const updateLink=(token,req)=>{
     return async(dispatch)=>{
         dispatch(updateLinkStart());
-        console.log(token,req);
+       
 
     try{
           const response = await fetch(getBaseUrl() + "links/", {
@@ -269,7 +269,7 @@ export const updateLink=(token,req)=>{
         })
 
         const data = await response.json(); 
-        console.log(response)
+        
         if(response.ok !== true){
             throw Error("Something went wrong!")
         }
@@ -313,7 +313,7 @@ export const aboveLinkFail=(err)=>{
 export const aboveLink=(token,what,u_name)=>{
     return async(dispatch)=>{
         dispatch(aboveLinkStart());
-        console.log(token);
+        
 
     try{
           const response = await fetch(getBaseUrl() + "links/icons-position", {
@@ -328,7 +328,7 @@ export const aboveLink=(token,what,u_name)=>{
         })
 
         const data = await response.json(); 
-        console.log(response)
+        
         if(response.ok !== true){
             throw Error("Something went wrong!")
         }
@@ -370,7 +370,7 @@ export const getPublicLinksFail=(err)=>{
 export const getPublicLinks=(token,u_name)=>{
     return async(dispatch)=>{
         dispatch(getPublicLinksStart());
-        
+       
 
     try{
         
@@ -378,17 +378,17 @@ export const getPublicLinks=(token,u_name)=>{
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-
+                "Authorization": "bearer "+token,
             },
         })
 
-        console.log("called get public links");
+        
         const data = await response.json(); 
         
         if(response.ok !== true){
             throw Error("Something went wrong!")
         }
-        console.log(data);
+        
         dispatch(getPublicLinksSuccess(data));
 
 

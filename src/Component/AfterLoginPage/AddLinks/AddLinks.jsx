@@ -237,14 +237,13 @@ function AddLinks(props) {
 
     
     
-console.log(fclass);
+
 //onchangefunc
 const[url,setUrl]=useState(null);
 const iconUrlChangeFunc=(e)=>{
     setUrl(e.target.value);
 }
 const setIconFunc=()=>{
-    console.log(url);
     let data={
         url:url,
         css:fclass
@@ -258,15 +257,14 @@ const setIconFunc=()=>{
 //checkboxfunc
 const[checked,setChecked]=useState(false);
 
-let u_name = localStorage.getItem("userName");
 const checkBoxFunc=(e)=>{
     
  if(e.target.value === "option1"){
      setChecked(true);
-     props.aboveLink(token,{icons_position:"above"},u_name);
+     props.aboveLink(token,{icons_position:"above"},pageLink);
      showNotificationMsz("icons are above","success");
  }else{
-    props.aboveLink(token,{icons_position:"below"},u_name);
+    props.aboveLink(token,{icons_position:"below"},pageLink);
     showNotificationMsz("icons are below","success");
  }
 }
@@ -406,7 +404,7 @@ const checkBoxFunc=(e)=>{
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" onChange={checkBoxFunc}/>
                                                                     <label class="form-check-label" for="exampleRadios2">
-                                                                        Below Links
+                                                                        Above Links
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -416,7 +414,7 @@ const checkBoxFunc=(e)=>{
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"  onChange={(e)=>{checkBoxFunc(e)}}/>
                                                                 <label class="form-check-label" for="exampleRadios1">
-                                                                    Above Links
+                                                                    Below Links
                                                                 </label>
                                                             </div>
                                                         </span>

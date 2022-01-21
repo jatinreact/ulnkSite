@@ -29,22 +29,27 @@ export const editProfileFail=(err)=>{
 export const editProfile=(token,req)=>{
     return async(dispatch)=>{
         dispatch(editProfileStart());
-        console.log(token);
+        console.log(req);
 
     try{
+            const formData = new FormData();
+            for await(const [key, value] of Object.entries(req)) {
+                console.log(`${key}: ${value}`);
+                formData.append(key, value)
+              }
           const response = await fetch(getBaseUrl() + "profile", {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
+//                "Content-Type": "multipart/form-data",
                 "Authorization": "bearer "+token,
 
 
             },
-            body:JSON.stringify(req)
+            body:formData,
         })
 
         const data = await response.json(); 
-        console.log(data)
+        
         if(response.ok !== true){
             throw Error("Something went wrong!")
         }
@@ -53,7 +58,7 @@ export const editProfile=(token,req)=>{
      
 
     }catch(err){
-        dispatch(editProfileFail(err.message));
+        dispatch(editProfileFail(err));
     }
     }
 }

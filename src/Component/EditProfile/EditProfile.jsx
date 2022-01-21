@@ -38,7 +38,7 @@ function EditProfile(props) {
                     })
                     .then(
                         (res) => {
-                            console.log("get response:::", res.data.profile_photo)
+                            
                              setshowimage(res.data.profile_photo)
                              setprofiletitle(res.data.profile_name)
                             setisloading(false)
@@ -90,7 +90,7 @@ function EditProfile(props) {
                     (error) => {
                         props.history.push("/add-icons")
                         // showNotificationMsz(`${error}`, "danger")
-                        console.log("data response error:::", error)
+                    
                         setisloading(false)
                     }
                 )
