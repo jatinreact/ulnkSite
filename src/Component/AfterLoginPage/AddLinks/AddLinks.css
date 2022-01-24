@@ -66,7 +66,8 @@
 }
 .linkoverflow_scroll {
   overflow-y: scroll;
-  height: 350px;
+  overflow-x: hidden;
+  height: 290px;  
 }
 .ancor_formatting {
   text-decoration: none !important;

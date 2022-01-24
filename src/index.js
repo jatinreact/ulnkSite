@@ -7,8 +7,10 @@ import store from "./store";
 import {Provider} from "react-redux";
 
 
+
+
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/ulnk">
   <React.StrictMode>
     <Provider store={store}>
     <App />

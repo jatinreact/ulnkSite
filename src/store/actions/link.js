@@ -1,7 +1,8 @@
 
 import * as actionTypes from "./actionTypes";
 import { getBaseUrl } from "../../utils";
-
+let profileName=localStorage.getItem("PageLink");
+console.log(profileName);
 
 export const linkCheckerStart=()=>{
     return{
@@ -102,7 +103,7 @@ export const setIcon=(token,json)=>{
         
         dispatch(setIconSuccess(data));
 
-     dispatch(getIcon(token));
+     dispatch(getPublicLinks(token,profileName));
 
     }catch(err){
         dispatch(setIconFail(err.message));
@@ -217,8 +218,7 @@ export const deleteLink=(token,id)=>{
         
         dispatch(deleteLinkSuccess(data));
 
-     dispatch(getIcon(token));
-     dispatch(LinkChecker(token));
+   dispatch(getPublicLinks(token,profileName));
 
     }catch(err){
         dispatch(deleteLinkFail(err.message));
@@ -276,9 +276,7 @@ export const updateLink=(token,req)=>{
         
         dispatch(updateLinkSuccess(data));
 
-        
-     dispatch(LinkChecker(token));
-     dispatch(getIcon(token));
+        dispatch(getPublicLinks(token,profileName));
 
     }catch(err){
         dispatch(updateLinkFail(err.message));

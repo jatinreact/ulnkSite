@@ -38,13 +38,14 @@ import shopify from "../../images/icons/shopify.png"
 import soundcloud from "../../images/icons/soundcloud.png"
 import messanger from "../../images/icons/messanger.png"
 import line from "../../images/icons/line.png"
-import MobileLinkView from '../MobileLinkView/MobileLinkView.jsx';
+import MobileLinkView from '../MobileLinkView/PublicMobileLinkView';
 
 import {getBaseUrl} from "../../../utils/index.jsx";
 import {showNotificationMsz} from "../../../utils/Validation";
 import {connect} from "react-redux";
 import * as actionCreator from "../../../store/actions/link"
 import { set } from 'react-hook-form';
+
 
 function AddLinks(props) {
 
@@ -99,10 +100,10 @@ function AddLinks(props) {
             path: pintrest,
             class:"fa fa-pinterest"
         },
-        {
-            path: shopping,
-            class:"fas fa-shopping-cart"
-        },
+        // {
+        //     path: shopping,
+        //     class:"fas fa-shopping-cart"
+        // },
         {
             path: linkedin,
             class:"fa fa-linkedin-square"
@@ -111,22 +112,22 @@ function AddLinks(props) {
             path: etsy,
             class:"fa fa-etsy"
         },
-        {
-            path: tiktok,
-            class:"fab fa-tiktok"
-        },
-        {
-            path: amazon,
-            class:"fab fa-amazon"
-        },
-        {
-            path: paypal,
-            class:"fab fa-paypal"
-        },
-        {
-            path: ebay,
-            class:"fab fa-ebay"
-        },
+        // {
+        //     path: tiktok,
+        //     class:"fab fa-tiktok"
+        // },
+        // {
+        //     path: amazon,
+        //     class:"fab fa-amazon"
+        // },
+        // {
+        //     path: paypal,
+        //     class:"fab fa-paypal"
+        // },
+        // {
+        //     path: ebay,
+        //     class:"fab fa-ebay"
+        // },
         {
             path: google,
             class:"fa fa-google"
@@ -135,10 +136,10 @@ function AddLinks(props) {
             path: digg,
             class:"fa fa-digg"
         },
-        {
-            path: m,
-            class:"fab fa-medium-m  "
-        },
+        // {
+        //     path: m,
+        //     class:"fab fa-medium-m  "
+        // },
         {
             path: spotify,
             class:"fa fa-spotify"
@@ -147,34 +148,34 @@ function AddLinks(props) {
             path: twitch,
             class:"fa fa-twitch"
         },
-        {
-            path: discord,
-            class:"fab fa-discord"
-        },
-        {
-            path: website,
-            class:"fa fa-facebook-f"
-        },
+        // {
+        //     path: discord,
+        //     class:"fab fa-discord"
+        // },
+        // {
+        //     path: website,
+        //     class:"fa fa-facebook-f"
+        // },
         {
             path: snapchat,
             class:"fa fa-snapchat"
         },
-        {
-            path: shopify,
-            class:"fab fa-shopify"
-        },
+        // {
+        //     path: shopify,
+        //     class:"fab fa-shopify"
+        // },
         {
             path: soundcloud,
             class:"fa  fa-soundcloud"
         },
-        {
-            path: messanger,
-            class:"fab fa-facebook-messenger"
-        },
-        {
-            path: line,
-            class:"fab fa-line"
-        }
+        // {
+        //     path: messanger,
+        //     class:"fab fa-facebook-messenger"
+        // },
+        // {
+        //     path: line,
+        //     class:"fab fa-line"
+        // }
 
     ]
 
@@ -220,6 +221,7 @@ function AddLinks(props) {
                         }else{
                             showNotificationMsz("User Created!","success");
                             setLoad(!load);
+                            props.getPubliclink(token,pageLink);
                         }
     
                         setError(false);
@@ -445,7 +447,7 @@ const checkBoxFunc=(e)=>{
                             </div>
                         </Grid>
                         <Grid item md={5} className="p-3">
-                            <MobileLinkView  load={load} checked={checked} hideEdit={"from component"}/>
+                            <MobileLinkView  load={load} checked={checked} hideEdit={"yes"}/>
                         </Grid>
                     </Grid>
                 </div >
@@ -539,6 +541,7 @@ const mapDispatchToProps=(dispatch)=>{
     return{
         setIcon:(token,data)=>dispatch(actionCreator.setIcon(token,data)),
         aboveLink:(toke,data,u_name)=>dispatch(actionCreator.aboveLink(toke,data,u_name)),
+        getPubliclink: (token,u_name) => dispatch(actionCreator.getPublicLinks(token,u_name)),
     }
 }
 

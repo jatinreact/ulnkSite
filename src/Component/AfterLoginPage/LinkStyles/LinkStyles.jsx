@@ -10,7 +10,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import SiteDetails from './SiteDetails.jsx';
-import MobileLinkView from '../MobileLinkView/MobileLinkView.jsx';
+import MobileLinkView from '../MobileLinkView/PublicMobileLinkView.jsx';
 
 
 
@@ -140,7 +140,7 @@ function AddLinks() {
                             </div>
                         </Grid>
                         <Grid item md={5} className="p-3">
-                            <MobileLinkView />
+                            <MobileLinkView  hideEdit={"yes"} />
                         </Grid>
                     </Grid>
                 </div >

@@ -7,9 +7,21 @@ import Loder from '../../../Loder/Loder';
 import * as actionCreator from "../../../store/actions/link";
 import {connect} from "react-redux";
 import {showNotificationMsz} from "../../../utils/Validation";
+import parse from "html-react-parser";
+
+
+
+
+
+
 function PublicMobileLinkView(props) {
 
-    let profile_name=props.location.pathname.split("/")[1]
+    let profile_name;
+    if(props.hideEdit != "yes"){
+     profile_name=props.location.pathname.split("/")[1]
+    }else{
+        profile_name=localStorage.getItem("PageLink");
+    }
 console.log(profile_name);
     const token = localStorage.getItem("token");
 
@@ -116,29 +128,22 @@ if(props.getPublicLinkRes){
     console.log(props.getPublicLinkRes.data.links[0],props.getPublicLinkRes.data.links[1])
     }
 
-    //html parser
 
-    let stringToHTML = function (str) {
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(str, 'text/html');
-        return doc.body;
-    };
 
     // const[bio,setBio]=useState("");
     let html="";
     if(props.getPublicLinkRes){
-        html=stringToHTML(props.getPublicLinkRes.data.settings.user.bio);
+    
     }
 
     console.log(html);
 
-   const getBio=(html)=>{
-        return (
-            html
-        );
-      }
+if(props.getPublicLinkRes){
+console.log(props.getPublicLinkRes.data.links.length);
+}
 
-      console.log(getBio(html))
+// const bio=getBio();
+// console.log(getBio());
 
     // console.log(bio);
     
@@ -224,6 +229,15 @@ if(props.getPublicLinkRes){
             <div className='phone_view_width'>
                 <div className="phoneborder_afterlogin p-2 mt-5">
 
+                    {
+                       props.getPublicLinkRes && (
+                           props.getPublicLinkRes.data.settings.share_button_enabled === true && (
+                            <p className='share-pub-profile-btn-cont'><i class="fa fa-share-alt-square share-pub-profile-btn"></i></p>
+                           )
+                       ) 
+                    }
+                   
+
 <>{
     props.getPublicLinkRes && (
         <>{
@@ -235,7 +249,7 @@ if(props.getPublicLinkRes){
                                 alt=""
                                 className="user_Image"/>
                         </div>
-                        <div>{props.getPublicLinkRes.data.settings.user.profile_title}</div>
+                        <div className='profile_name_pub'>{props.getPublicLinkRes.data.settings.user.profile_title}</div>
 
 
                     </div>
@@ -248,7 +262,7 @@ if(props.getPublicLinkRes){
                                 alt=""
                                 className="user_Image"/>
                         </div>
-                        <div>{profile_name}</div>
+                        <div className='profile_name_pub'>{profile_name}</div>
 
 
                     </div>
@@ -256,23 +270,24 @@ if(props.getPublicLinkRes){
             </>)
         }</>
     )
-}</>
+}</> 
                     
-                    {props.getPublicLinkRes && props.getPublicLinkRes.data.settings.user.bio && props.getPublicLinkRes.data.settings.user.bio === "<p><br></p>" && (<>
-                        <p>{getBio}</p>
+                    {props.getPublicLinkRes && props.getPublicLinkRes.data.settings.user.bio  && (<>
+                        <p className='profile_bio_pub'>{parse(props.getPublicLinkRes.data.settings.user.bio)}</p>
                     </>)}
 
                     <div className="mt-2 p-2 linkoverflow_scroll mobile-view">
                         {
-                            props.getPublicLinkRes && (
+                            props.getPublicLinkRes  && (
 <>
 {
-   
-    props.getPublicLinkRes.data.settings.icons_position === "above" ? (<>
+  
+  props.getPublicLinkRes.data.links.length != 0  && props.getPublicLinkRes.data.settings.icons_position === "above" ? (<>
     {
         
          props.getPublicLinkRes.data.links[1].links.map((el,ind)=>{
              return(
+                 <>
                 <a key={ind} href={
                     `http://${
                         el.original_url
@@ -287,6 +302,39 @@ if(props.getPublicLinkRes){
                     el.title
                 }</p>
             </a>
+         
+            <>
+         {
+             props.hideEdit && (
+                 <>{
+    
+                    <div className='links-div'>
+                                                               <span className='links-editable'>
+                                                                   <i className='fa fa-trash'
+                                                                       onClick={
+                                                                           () => editDeleteFunc("delete", el._id)
+                                                                   }></i>
+                                                                   <i className='fa fa-edit'
+                                                                       onClick={
+                                                                           () => {
+                                                                               editDeleteFunc("edit", el._id);
+                                                                               setForm({
+                                                                                   ...form,
+                                                                                   title: el.title,
+                                                                                   url: el.original_url
+                                                                               })
+                                                                           }
+                                                                   }></i>
+                                                           </span>
+                                                       </div>
+                
+                   
+                }</>
+             )
+         }
+         </>
+            
+            </>
              )
          })
     }
@@ -298,7 +346,7 @@ if(props.getPublicLinkRes){
     }
           {
               
-              props.getPublicLinkRes.data.links[1].links.map((el,ki)=>{
+              props.getPublicLinkRes.data.links.length != 0  &&   props.getPublicLinkRes.data.links[1].links.map((el,ki)=>{
                   return (
                       <>
                        <a key={ki} href={
@@ -333,6 +381,7 @@ if(props.getPublicLinkRes){
     {
          props.getPublicLinkRes.data.links[0].links.map((el,kk)=>{
              return(
+                 <>
                 <a key={kk} href={
                     `http://${
                         el.original_url
@@ -347,12 +396,48 @@ if(props.getPublicLinkRes){
                     el.title
                 }</p>
             </a>
+  
+            <>
+         {
+             props.hideEdit && (
+                 <>{
+    
+                    <div className='links-div'>
+                                                               <span className='links-editable'>
+                                                                   <i className='fa fa-trash'
+                                                                       onClick={
+                                                                           () => editDeleteFunc("delete", el._id)
+                                                                   }></i>
+                                                                   <i className='fa fa-edit'
+                                                                       onClick={
+                                                                           () => {
+                                                                               editDeleteFunc("edit", el._id);
+                                                                               setForm({
+                                                                                   ...form,
+                                                                                   title: el.title,
+                                                                                   url: el.original_url
+                                                                               })
+                                                                           }
+                                                                   }></i>
+                                                           </span>
+                                                       </div>
+                
+                   
+                }</>
+             )
+         }
+         </>
+        
+</>
+            
              )
          })
     }
+
+    
     </>):(<>
           {
-              props.getPublicLinkRes.data.links[0].links.map((el,ii)=>{
+              props.getPublicLinkRes.data.links.length != 0 && props.getPublicLinkRes.data.links[0].links.map((el,ii)=>{
                   return (
                       <>
                        <a key={ii} href={

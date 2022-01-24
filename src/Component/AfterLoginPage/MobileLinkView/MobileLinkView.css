@@ -11,6 +11,7 @@
   .icons-links{
     margin-left: 20px;
     color: #50d3cb;
+    padding-bottom: 11px;
   }
   .links-editable{
     padding-top: -20px;
@@ -115,4 +116,24 @@ left: 35%;
     padding: 2px;
   }
   
+  .profile_name_pub{
+    font-weight: bold;
+    font-size: 19px;
+    text-transform: uppercase;
+  }
+
+  .profile_bio_pub{
+    font-size: 14px;
+ 
+    margin-bottom: 0px;
+    border-radius: 20px;
+  }
+  .share-pub-profile-btn{
+    font-size: 27px;
+    color: #50d3cb;
+    padding-right: 5px;
+  }
+  .share-pub-profile-btn-cont{
+    text-align: right;
+  }
   

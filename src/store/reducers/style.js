@@ -3,6 +3,7 @@ import * as actionTypes from "../actions/actionTypes"
 
 const initialState = {
     editProfileRes: null,
+    enbShareBtnRes:null,
     loading: false,
     error: null
 }
@@ -37,6 +38,35 @@ export const editProfileFail = (state, action) => {
 }
 
 
+export const enbShareBtnStart = (state, action) => {
+    return {
+        ...state,
+        loading: true,
+        error: null,
+        enbShareBtnRes: null
+    }
+}
+
+export const enbShareBtnSuccess = (state, action) => {
+    return {
+        ...state,
+        loading: false,
+        enbShareBtnRes: action.data,
+        error: null
+    }
+
+
+}
+
+export const enbShareBtnFail = (state, action) => {
+    return {
+        ...state,
+        loading: false,
+        error: action.err
+    }
+}
+
+
 const StyleReducer = (state = initialState, action) => {
 
     switch (action.type) { // above link
@@ -52,6 +82,16 @@ const StyleReducer = (state = initialState, action) => {
             return editProfileFail(state, action);
 
 
+            case actionTypes.ENB_SHARE_BTN_START:
+                return enbShareBtnStart(state, action);
+    
+            case actionTypes.ENB_SHARE_BTN_SUCCESS:
+                return enbShareBtnSuccess(state, action);
+    
+    
+            case actionTypes.ENB_SHARE_BTN_FAIL:
+                return enbShareBtnFail(state, action);
+    
         default:
             return state;
     }

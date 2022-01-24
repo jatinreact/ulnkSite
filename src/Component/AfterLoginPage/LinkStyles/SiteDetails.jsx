@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Card, Button } from '@material-ui/core';
 import RichTextEditor from "react-rte";
 import Switch from "react-switch";
@@ -41,17 +41,55 @@ function SiteDetails(props) {
     }
 
     const token = localStorage.getItem("token");
-    const editProfileFunc=()=>{
+    const profile_name= localStorage.getItem("PageLink");
+
+    const editProfileImage=()=>{
         let data;
 data={
     profile_photo:file,
-    profile_title:"aj7",
+    profile_title:profile_name,
     visible:isHidden,
-    bio:rteValue.toString('html'),
 }
 props.editProfile(token,data);
     }
 
+console.log(rteValue.toString('html'));  
+let error=null;
+const editProfileBio=()=>{
+if(rteValue.toString('html') == "<p><br></p>"){
+  error = "If you want to edit bio then fill it bio section!"
+}
+    let data;
+
+data={
+    profile_title:profile_name,
+  bio:rteValue.toString('html'),
+}
+props.editProfile(token,data);
+setrteValue(RichTextEditor.createEmptyValue());
+
+}
+
+console.log(error);
+
+
+
+useEffect(()=>{
+
+    //enable share button
+
+
+let what;
+if(ischecked === true){
+    what={enabled:ischecked}
+    props.enbShareBtn(token,what);
+}else{
+    what={enabled:ischecked}
+    props.enbShareBtn(token,what);
+}
+console.log(what);
+
+},[ischecked])
 
     return (
         <>
@@ -60,7 +98,7 @@ props.editProfile(token,data);
                     <div className="text-center Style_heading">Profile picture & Username</div>
                     <div className="text-center">
                         <img
-                            src="https://www.seekpng.com/png/detail/202-2024994_profile-icon-profile-logo-no-background.png"
+                            src={props.getPublicLinkRes && props.getPublicLinkRes.data.settings.user.image ? props.getPublicLinkRes.data.settings.user.image : "https://www.seekpng.com/png/detail/202-2024994_profile-icon-profile-logo-no-background.png"}
                             alt=""
                             id="img"
                             className="profile_Edit"
@@ -88,7 +126,7 @@ props.editProfile(token,data);
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" onChange={onchangeFunc} />
                                         <label class="form-check-label" for="exampleRadios2">
-                                            Visible
+                                            Hidden
                                         </label>
                                     </div>
                                 </div>
@@ -98,7 +136,7 @@ props.editProfile(token,data);
                                 <div class="form-check">
                                     <input class="form-check-input"  type="radio" name="exampleRadios" id="exampleRadios1" value="option1" onChange={onchangeFunc} />
                                     <label class="form-check-label" for="exampleRadios1">
-                                        Hidden
+                                    Visible
                                     </label>
                                 </div>
                             </span>
@@ -117,7 +155,7 @@ props.editProfile(token,data);
                                 <Button
                                     variant="contained"
                                     className="button_formatting"
-                                    onClick={editProfileFunc}
+                                    onClick={editProfileImage}
                                 >
                                     Save
                                 </Button>
@@ -135,7 +173,11 @@ props.editProfile(token,data);
                             value={rteValue}
                             onChange={HandleRichtext}
                         />
-
+{
+    error && (
+        <p>{error}</p>
+    )
+}
                         <div className="text-right mt-2 mb-2">
                             <span>
                                 <Button
@@ -149,7 +191,7 @@ props.editProfile(token,data);
                                 <Button
                                     variant="contained"
                                     className="button_formatting"
-                                    onClick={editProfileFunc}
+                                    onClick={editProfileBio}
                                 >
                                     Save
                                 </Button>
@@ -322,6 +364,7 @@ props.editProfile(token,data);
 const mapStateToProps=(state)=>{
     return{
         editProfileRes:state.links.editProfileRes,
+        getPublicLinkRes:state.links.getPublicLinkRes,
         
     }
 }
@@ -329,6 +372,7 @@ const mapStateToProps=(state)=>{
 const mapDispatchToProps=(dispatch)=>{
     return{
         editProfile:(token,data)=>dispatch(actionCreator.editProfile(token,data)),
+        enbShareBtn:(token,what)=>dispatch(actionCreator.enbShareBtn(token,what))
     }
 }
 
