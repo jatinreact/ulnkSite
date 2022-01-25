@@ -7,7 +7,8 @@ import "./EditProfile.css";
 import { getBaseUrl } from "../../utils";
 import axios from "axios";
 import Loder from "../../Loder/Loder";
-import { blankValidator, showNotificationMsz } from "../../utils/Validation"
+import { blankValidator, showNotificationMsz } from "../../utils/Validation";
+import { connect } from 'react-redux';
 
 
 function EditProfile(props) {
@@ -15,7 +16,7 @@ function EditProfile(props) {
     const [isloading, setisloading] = useState(false)
 
     const [showimage, setshowimage] = useState("");
-    const [profiletitle, setprofiletitle] = useState(localStorage.getItem("userName"))
+    const [profiletitle, setprofiletitle] = useState(localStorage.getItem("PageLink"))
     const [ChangePhotoName, setChangePhotoName] = useState("")
     const [ChangePhototosend, setChangePhototosend] = useState(null)
     const [isUpdated, setisUpdated] = useState(false)
@@ -177,4 +178,10 @@ function EditProfile(props) {
     )
 }
 
-export default HOC(EditProfile)
+const mapStateToProps = (state) => {
+    return {
+        getPublicLinkRes:state.links.getPublicLinkRes,
+   }
+}
+
+export default connect(mapStateToProps,null) (HOC(EditProfile))

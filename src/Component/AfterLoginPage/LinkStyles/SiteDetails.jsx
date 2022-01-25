@@ -91,6 +91,71 @@ console.log(what);
 
 },[ischecked])
 
+//set video 
+const[video,setVideo]=useState(null);
+
+const videoChangeFunc=(e)=>{
+    setVideo(e.target.value);
+
+}
+const setVideoFunc=()=>{
+    let data={
+        url:video,
+        type:"media"
+    }
+    props.setVideo(token,data)
+}
+console.log(video);
+
+//favicon
+const[fav,setFav]=useState(null);
+const onchangeFavFunc=(e)=>{
+    setFav(e.target.files[0]);
+}
+const uploadFav=()=>{
+    console.log(fav);
+    props.setfavicon(token,{fav_icon:fav})
+}
+
+//page titles
+const [titles,setTitles]=useState({
+    Social_Titles:"",
+    Music_Titles:"",
+    Link_Titles:"",
+    Contacts_Titles:"",
+})
+
+const titleChangeFunc=(e)=>{
+    const val=e.target.value;
+    const name=e.target.name;
+    setTitles({...titles,[name]:val});
+    console.log(val,name);
+}
+const [title,isTitle]=useState(null);
+
+const titlesShowFunc=(e)=>{
+
+console.log(e.target.value);
+if(e.target.value === "option1"){
+    isTitle(true);
+}
+if(e.target.value === "option2"){
+    isTitle(false);
+}
+}
+const setTitlesFunc=()=>{
+
+    let data={
+        social_title : titles.Social_Titles,
+         link_title : titles.Link_Titles,
+        music_title: titles.Music_Titles,
+        contact_title: titles.Contacts_Titles,
+        show_titles: title
+    }
+    props.setPageTitles(token,data);
+    console.log(titles,data);
+}
+
     return (
         <>
             <div className="mt-3">
@@ -124,7 +189,7 @@ console.log(what);
                                 <div className="text-center"><i className="fa fa-user" /></div>
                                 <div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" onChange={onchangeFunc} />
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"  />
                                         <label class="form-check-label" for="exampleRadios2">
                                             Hidden
                                         </label>
@@ -220,11 +285,19 @@ console.log(what);
                         <div className="text-center Heading_setting mt-1">Favicon</div>
                         <div className="text-center heading_content mt-1">Creators prefer these advanced features</div>
                         <div className="text-center mt-3 ">
+                            <input
+                            type="file"
+                            accept="image/*"
+                            name="image-upload"
+                            id="input"
+                            onChange={onchangeFavFunc}
+                        />
                             <Button
                                 variant="contained"
                                 className="starttrailbtn"
+                                onClick={uploadFav}
                             >
-                                Start Free Trial <i className="fa fa-send ml-2" />
+                                Upload  <i className="fa fa-send ml-2" />
                             </Button>
                         </div>
                     </Card>
@@ -240,7 +313,7 @@ console.log(what);
                                     <div className="text-center"><i className="fa fa-arrow-up" /></div>
                                     <div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" />
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value={"option2"}  />
                                             <label class="form-check-label" for="exampleRadios2">
                                                 Below Links
                                             </label>
@@ -259,7 +332,7 @@ console.log(what);
                             </div>
 
                             <div className="mt-2 mb-2">
-                                <input className="form-control" placeholder="YouTube, Twitch, Vimeo" />
+                                <input className="form-control" type="text  " placeholder="YouTube, Twitch, Vimeo" value={video} onChange={(e)=>videoChangeFunc(e)}/>
                             </div>
                         </div>
 
@@ -276,6 +349,7 @@ console.log(what);
                                 <Button
                                     variant="contained"
                                     className="button_formatting"
+                                    onClick={setVideoFunc}
                                 >
                                     Save
                                 </Button>
@@ -288,32 +362,46 @@ console.log(what);
                     <Card className=" mb-2 Card_shadow p-2">
                         <div className="text-center Style_heading">Page Titles</div>
                         <div className="data_padding_from_both mt-2">
-                            <div className="d-flex">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
-                                    <label class="form-check-label" for="inlineCheckbox1">Titles</label>
+                                               <div className="data_padding_from_both mt-2">
+                        <div className="d-flex justify-content-between">
+                            <span>
+                                <div className="text-center"><i className="fa fa-user" /></div>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" onChange={titlesShowFunc} />
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            Hidden
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="form-check form-check-inline ml-5">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
-                                    <label class="form-check-label" for="inlineCheckbox2">No Titles</label>
+                            </span>
+                            <span>
+                                <div className="text-center"><i className="fa fa-user" /></div>
+                                <div class="form-check">
+                                    <input class="form-check-input"  type="radio" name="exampleRadios" id="exampleRadios1" value="option1" onChange={titlesShowFunc} />
+                                    <label class="form-check-label" for="exampleRadios1">
+                                    Visible
+                                    </label>
                                 </div>
-                            </div>
-
+                            </span>
+                        </div>
+                    </div>
+                           
                             <div className="mt-1">Social Titles</div>
                             <div className="mt-1 mb-2">
-                                <input className="form-control" placeholder="My Socials" />
+                                <input className="form-control" name='Social_Titles' placeholder="My Socials" value={titles.Social_Titles} onChange={titleChangeFunc}/>
                             </div>
                             <div className="mt-1">Music Titles</div>
                             <div className="mt-1 mb-2">
-                                <input className="form-control" placeholder="My Music" />
+                                <input className="form-control" placeholder="My Music" name='Music_Titles' value={titles.Music_Titles} onChange={titleChangeFunc}/>
                             </div>
                             <div className="mt-1">Link Titles</div>
                             <div className="mt-1 mb-2">
-                                <input className="form-control" placeholder="My Links" />
+                                <input className="form-control" placeholder="My Links" name='Link_Titles' value={titles.Link_Titles} onChange={titleChangeFunc}/>
                             </div>
                             <div className="mt-1">Contacts Titles</div>
                             <div className="mt-1 mb-2">
-                                <input className="form-control" placeholder="My Contacts" />
+                                <input className="form-control" placeholder="My Contacts" name='Contacts_Titles' value={titles.Contacts_Titles} onChange={titleChangeFunc}/>
                             </div>
 
                         </div>
@@ -331,6 +419,7 @@ console.log(what);
                                 <Button
                                     variant="contained"
                                     className="button_formatting"
+                                    onClick={setTitlesFunc}
                                 >
                                     Save
                                 </Button>
@@ -372,7 +461,13 @@ const mapStateToProps=(state)=>{
 const mapDispatchToProps=(dispatch)=>{
     return{
         editProfile:(token,data)=>dispatch(actionCreator.editProfile(token,data)),
-        enbShareBtn:(token,what)=>dispatch(actionCreator.enbShareBtn(token,what))
+        enbShareBtn:(token,what)=>dispatch(actionCreator.enbShareBtn(token,what)),
+        
+        setVideo:(token,what)=>dispatch(actionCreator.setVideo(token,what)),
+        
+        setfavicon:(token,what)=>dispatch(actionCreator.setfavicon(token,what)),
+        setPageTitles:(token,what)=>dispatch(actionCreator.setPageTitles(token,what)),
+        
     }
 }
 

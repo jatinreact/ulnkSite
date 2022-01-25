@@ -123,3 +123,186 @@ export const enbShareBtn=(token,what)=>{
     }
     }
 }
+
+
+//set video
+
+export const setVideoStart=()=>{
+    return{
+        type:actionTypes.SET_VIDEO_START,
+    }
+}
+
+export const setVideoSuccess=(data)=>{
+    
+    return{
+        type:actionTypes.SET_VIDEO_SUCCESS,
+        data:data
+    }
+   
+}
+
+export const setVideoFail=(err)=>{
+    return{
+        type:actionTypes.SET_VIDEO_FAIL,
+        err,
+    }
+}
+
+export const setVideo=(token,what)=>{
+    
+    return async(dispatch)=>{
+        dispatch(setVideoStart());
+        console.log(what);
+
+    try{
+           
+              
+          const response = await fetch(getBaseUrl() + "links/videos", {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+                "Authorization": "bearer "+token,
+
+
+            },
+            body:JSON.stringify(what),
+        })
+
+        const data = await response.json(); 
+        
+        if(response.ok !== true){
+            throw Error("Something went wrong!")
+        }
+        console.log("video res:",data);
+        dispatch(setVideoSuccess(data));
+     dispatch(getPublicLinks(token,profileName));
+
+    }catch(err){
+        dispatch(setVideoFail(err));
+    }
+    }
+}
+
+////set favicon
+
+export const setfaviconStart=()=>{
+    return{
+        type:actionTypes.SET_FAV_START,
+    }
+}
+
+export const setfaviconSuccess=(data)=>{
+    
+    return{
+        type:actionTypes.SET_FAV_SUCCESS,
+        data:data
+    }
+   
+}
+
+export const setfaviconFail=(err)=>{
+    return{
+        type:actionTypes.SET_FAV_FAIL,
+        err,
+    }
+}
+
+export const setfavicon=(token,what)=>{
+    
+    return async(dispatch)=>{
+        dispatch(setfaviconStart());
+        console.log(what);
+
+    try{
+           
+        const formData = new FormData();
+        for await(const [key, value] of Object.entries(what)) {
+            console.log(`${key}: ${value}`);
+            formData.append(key, value)
+          }
+          const response = await fetch(getBaseUrl() + "links/fav-icon", {
+            method: "POST",
+            headers: {
+            //    "Content-Type": "application/json",
+                "Authorization": "bearer "+token,
+
+
+            },
+            body:formData,
+        })
+
+        const data = await response.json(); 
+        
+        if(response.ok !== true){
+            throw Error("Something went wrong!")
+        }
+        console.log("favicon res:",data);
+        dispatch(setfaviconSuccess(data));
+     dispatch(getPublicLinks(token,profileName));
+
+    }catch(err){
+        dispatch(setfaviconFail(err));
+    }
+    }
+}
+
+////set page titles
+
+export const setPageTitlesStart=()=>{
+    return{
+        type:actionTypes.SET_FAV_START,
+    }
+}
+
+export const setPageTitlesSuccess=(data)=>{
+    
+    return{
+        type:actionTypes.SET_FAV_SUCCESS,
+        data:data
+    }
+   
+}
+
+export const setPageTitlesFail=(err)=>{
+    return{
+        type:actionTypes.SET_FAV_FAIL,
+        err,
+    }
+}
+
+export const setPageTitles=(token,what)=>{
+    
+    return async(dispatch)=>{
+        dispatch(setPageTitlesStart());
+        console.log(what);
+
+    try{
+           
+       
+          const response = await fetch(getBaseUrl() + "links/page-titles", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "bearer "+token,
+
+
+            },
+            body:JSON.stringify(what),
+        })
+
+        const data = await response.json(); 
+        
+        if(response.ok !== true){
+            throw Error("Something went wrong!")
+        }
+        console.log("favicon res:",data);
+        dispatch(setPageTitlesSuccess(data));
+     dispatch(getPublicLinks(token,profileName));
+
+    }catch(err){
+        dispatch(setPageTitlesFail(err));
+    }
+    }
+}
+

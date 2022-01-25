@@ -139,7 +139,7 @@ if(props.getPublicLinkRes){
     console.log(html);
 
 if(props.getPublicLinkRes){
-console.log(props.getPublicLinkRes.data.links.length);
+console.log("data: ",props.getPublicLinkRes.data);
 }
 
 // const bio=getBio();
@@ -204,7 +204,7 @@ console.log(props.getPublicLinkRes.data.links.length);
             <div className="p-2 userdaboard_color d-flex justify-content-between" >
                 <div className="add_link_heading" >MY ULNK HUB LINK:
                     <br/><a href={
-                            `/${profile_name}`
+                            `${profile_name}`
                         }
                         target="_blank">
                         <span className="link_color">
@@ -277,7 +277,7 @@ console.log(props.getPublicLinkRes.data.links.length);
                     </>)}
 
                     <div className="mt-2 p-2 linkoverflow_scroll mobile-view">
-                        {
+                        {/* {
                             props.getPublicLinkRes  && (
 <>
 {
@@ -370,10 +370,10 @@ console.log(props.getPublicLinkRes.data.links.length);
     </>)
 }
 
-</>)}
+</>)} */}
 
 {/* second section */}
-{
+{/* {
                             props.getPublicLinkRes && (
 <>
 {
@@ -461,7 +461,334 @@ console.log(props.getPublicLinkRes.data.links.length);
     </>)
 }
 
-</>)}
+</>)} */}
+
+{/* first section */}
+{
+    props.getPublicLinkRes && (
+        props.getPublicLinkRes.data.links.length !== 0  && props.getPublicLinkRes.data.links[0] && (
+        <>
+        {
+            props.getPublicLinkRes.data.links[0].title === "link" && (
+                <>
+                 {
+         props.getPublicLinkRes.data.links[0].links.map((el,kk)=>{
+             return(
+                 <>
+                <a key={kk} href={
+                    `http://${
+                        el.original_url
+                    }`
+                }
+                target="_blank">
+                <p className='add_new_link_btn '
+                    style={ 
+                        {"borderRadius": "20px"}
+                }>
+                    {
+                    el.title
+                }</p>
+            </a>
+  
+            <>
+         {
+             props.hideEdit && (
+                 <>{
+    
+                    <div className='links-div'>
+                                                               <span className='links-editable'>
+                                                                   <i className='fa fa-trash'
+                                                                       onClick={
+                                                                           () => editDeleteFunc("delete", el._id)
+                                                                   }></i>
+                                                                   <i className='fa fa-edit'
+                                                                       onClick={
+                                                                           () => {
+                                                                               editDeleteFunc("edit", el._id);
+                                                                               setForm({
+                                                                                   ...form,
+                                                                                   title: el.title,
+                                                                                   url: el.original_url
+                                                                               })
+                                                                           }
+                                                                   }></i>
+                                                           </span>
+                                                       </div>
+                
+                   
+                }</>
+             )
+         }
+         </>
+        
+</>
+            
+             )
+         })
+    }
+
+                </>
+            )
+        }
+         {
+            props.getPublicLinkRes.data.links[0].title === "icon" && (
+                <>
+                {
+            props.getPublicLinkRes.data.links[0].links.map((el,ii)=>{
+                  return (
+                      <>
+                       <a key={ii} href={
+                                    `http://${
+                                        el.original_url
+                                    }`
+                                }
+                                target="_blank">
+                                <span>
+                                    <i className={
+                                        `${
+                                            el.css
+                                        } icons-links`
+                                    }></i>
+                                </span>
+                            </a>
+</>
+                  )
+              })
+          }
+    </>
+            )
+        }
+
+{
+            props.getPublicLinkRes.data.links[0].title === "media" && (
+                <>media</>
+            )
+        }
+        </>
+        )
+    )
+}
+
+{/* //middle section */}
+
+
+{
+    props.getPublicLinkRes && (
+        
+        props.getPublicLinkRes.data.links.length !== 0  && props.getPublicLinkRes.data.links[1] && (
+        <>
+  <br/>
+        {
+            props.getPublicLinkRes.data.links[1].title === "link" && (
+                <>
+                 {
+         props.getPublicLinkRes.data.links[1].links.map((el,kk)=>{
+             return(
+                 <>
+                <a key={kk} href={
+                    `http://${
+                        el.original_url
+                    }`
+                }
+                target="_blank">
+                <p className='add_new_link_btn '
+                    style={ 
+                        {"borderRadius": "20px"}
+                }>
+                    {
+                    el.title
+                }</p>
+            </a>
+  
+            <>
+         {
+             props.hideEdit && (
+                 <>{
+    
+                    <div className='links-div'>
+                                                               <span className='links-editable'>
+                                                                   <i className='fa fa-trash'
+                                                                       onClick={
+                                                                           () => editDeleteFunc("delete", el._id)
+                                                                   }></i>
+                                                                   <i className='fa fa-edit'
+                                                                       onClick={
+                                                                           () => {
+                                                                               editDeleteFunc("edit", el._id);
+                                                                               setForm({
+                                                                                   ...form,
+                                                                                   title: el.title,
+                                                                                   url: el.original_url
+                                                                               })
+                                                                           }
+                                                                   }></i>
+                                                           </span>
+                                                       </div>
+                
+                   
+                }</>
+             )
+         }
+         </>
+        
+</>
+            
+             )
+         })
+    }
+
+                </>
+            )
+        }
+         {
+            props.getPublicLinkRes.data.links[1].title === "icon" && (
+                <>
+                {
+             props.getPublicLinkRes.data.links[1].links.map((el,ii)=>{
+                  return (
+                      <>
+                       <a key={ii} href={
+                                    `http://${
+                                        el.original_url
+                                    }`
+                                }
+                                target="_blank">
+                                <span>
+                                    <i className={
+                                        `${
+                                            el.css
+                                        } icons-links`
+                                    }></i>
+                                </span>
+                            </a>
+</>
+                  )
+              })
+          }
+    </>
+            )
+        }
+
+{
+            props.getPublicLinkRes.data.links[1].title === "media" && (
+                <>media</>
+            )
+        }
+        </>)
+    )
+}
+
+{/* //last section */}
+
+
+{
+    props.getPublicLinkRes && (
+        props.getPublicLinkRes.data.links.length !== 0  &&  props.getPublicLinkRes.data.links[2] && (
+        <>
+        <br/>
+        {
+            props.getPublicLinkRes.data.links[2].title === "link" && (
+                <>
+                 {
+         props.getPublicLinkRes.data.links[2].links.map((el,kk)=>{
+             return(
+                 <>
+                <a key={kk} href={
+                    `http://${
+                        el.original_url
+                    }`
+                }
+                target="_blank">
+                <p className='add_new_link_btn '
+                    style={ 
+                        {"borderRadius": "20px"}
+                }>
+                    {
+                    el.title
+                }</p>
+            </a>
+  
+            <>
+         {
+             props.hideEdit && (
+                 <>{
+    
+                    <div className='links-div'>
+                                                               <span className='links-editable'>
+                                                                   <i className='fa fa-trash'
+                                                                       onClick={
+                                                                           () => editDeleteFunc("delete", el._id)
+                                                                   }></i>
+                                                                   <i className='fa fa-edit'
+                                                                       onClick={
+                                                                           () => {
+                                                                               editDeleteFunc("edit", el._id);
+                                                                               setForm({
+                                                                                   ...form,
+                                                                                   title: el.title,
+                                                                                   url: el.original_url
+                                                                               })
+                                                                           }
+                                                                   }></i>
+                                                           </span>
+                                                       </div>
+                
+                   
+                }</>
+             )
+         }
+         </>
+        
+</>
+            
+             )
+         })
+    }
+</>
+            )
+        }
+         {
+            props.getPublicLinkRes.data.links[2].title === "icon" && (
+                <>
+                {
+                    console.log("last sec called")
+                }
+                {
+                props.getPublicLinkRes.data.links[2].links.map((el,ii)=>{
+                  return (
+                      <>
+                       <a key={ii} href={
+                                    `http://${
+                                        el.original_url
+                                    }`
+                                }
+                                target="_blank">
+                                <span>
+                                    <i className={
+                                        `${
+                                            el.css
+                                        } icons-links`
+                                    }></i>
+                                </span>
+                            </a>
+</>
+                  )
+              })
+          }
+    </>
+            )
+        }
+
+{
+            props.getPublicLinkRes.data.links[2].title === "media" && (
+                <>media</>
+            )
+        }
+        </>)
+    )
+}
+
+
 
                                              </div>
                 </div>

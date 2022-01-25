@@ -182,7 +182,7 @@ function MobileLinkView(props) {
             <div className="p-2 userdaboard_color d-flex justify-content-between">
                 <div className="add_link_heading">MY ULNK HUB LINK:
                     <br/><Link to={
-                            `/${userName}`
+                            `${userName}`
                         }
                         target="_blank">
                         <span className="link_color">
