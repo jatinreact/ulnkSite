@@ -137,3 +137,17 @@ left: 35%;
     text-align: right;
   }
   
+  .publicMobileLinkView_phone{
+    
+    background-size: cover;
+    background-position: center;
+  }
+  .pub-link-title{
+    text-transform: uppercase;
+  }
+  .pub-link-title1{
+    text-transform: lowercase;
+  }
+  .pub-link-title2{
+    text-transform: capitalize;
+  }

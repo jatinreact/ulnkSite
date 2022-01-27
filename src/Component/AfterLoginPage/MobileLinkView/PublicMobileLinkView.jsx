@@ -139,13 +139,20 @@ if(props.getPublicLinkRes){
     console.log(html);
 
 if(props.getPublicLinkRes){
-console.log("data: ",props.getPublicLinkRes.data);
+//console.log("data: ",props.getPublicLinkRes.data.settings.appearance.background_image);
 }
 
-// const bio=getBio();
-// console.log(getBio());
+// //backgound image for phone
+// const[bg,setBg]=useState("");
+// if(props.getPublicLinkRes){
+//     if(props.getPublicLinkRes.data.settings.appearance.background_image){
+//         setBg(props.getPublicLinkRes.data.settings.appearance.background_image);
+//     }else{
+//         setBg("none");
+//     }
+// }
 
-    // console.log(bio);
+// console.log(bg);
     
     return (
         <> {/* edit delete dialog box */}
@@ -201,7 +208,7 @@ console.log("data: ",props.getPublicLinkRes.data);
         }
 
 
-            <div className="p-2 userdaboard_color d-flex justify-content-between" >
+            <div className="p-2 userdaboard_color d-flex justify-content-between"  >
                 <div className="add_link_heading" >MY ULNK HUB LINK:
                     <br/><a href={
                             `${profile_name}`
@@ -227,7 +234,11 @@ console.log("data: ",props.getPublicLinkRes.data);
 
             </div>
             <div className='phone_view_width'>
-                <div className="phoneborder_afterlogin p-2 mt-5">
+                <div className="phoneborder_afterlogin p-2 mt-5 publicMobileLinkView_phone " style={{
+                    "backgroundImage":props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.background_image ? `url(${props.getPublicLinkRes.data.settings.appearance.background_image})` :"",
+                    fontFamily:props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.main_font ? props.getPublicLinkRes.data.settings.appearance.main_font+",sans-serif" : "",
+                    textTransform: props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case ? "lowercase" :  "",
+                    backgroundColor: props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.page_color ? props.getPublicLinkRes.data.settings.appearance.page_color :  "" }}>
 
                     {
                        props.getPublicLinkRes && (
@@ -276,7 +287,7 @@ console.log("data: ",props.getPublicLinkRes.data);
                         <p className='profile_bio_pub'>{parse(props.getPublicLinkRes.data.settings.user.bio)}</p>
                     </>)}
 
-                    <div className="mt-2 p-2 linkoverflow_scroll mobile-view">
+                    <div className="mt-2 p-2 linkoverflow_scroll mobile-view" >
                         {/* {
                             props.getPublicLinkRes  && (
 <>
@@ -481,9 +492,16 @@ console.log("data: ",props.getPublicLinkRes.data);
                     }`
                 }
                 target="_blank">
-                <p className='add_new_link_btn '
+                <p className={`add_new_link_btn   
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "uppercase"  ? "pub-link-title" : "none"}
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "lowercase"  ? "pub-link-title1" : "none"}
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "capitalize"  ? "pub-link-title2" : "none"}
+                `}
                     style={ 
-                        {"borderRadius": "20px"}
+                        {"borderRadius": "20px",
+                 
+                        fontFamily:props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.title_font ? props.getPublicLinkRes.data.settings.appearance.title_font+",monospace !important" : "",
+                    }
                 }>
                     {
                     el.title
@@ -591,10 +609,15 @@ console.log("data: ",props.getPublicLinkRes.data);
                     }`
                 }
                 target="_blank">
-                <p className='add_new_link_btn '
+                <p className={`add_new_link_btn   
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "uppercase"  ? "pub-link-title" : "none"}
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "lowercase"  ? "pub-link-title1" : "none"}
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "capitalize"  ? "pub-link-title2" : "none"}
+                `}
                     style={ 
-                        {"borderRadius": "20px"}
-                }>
+                        {"borderRadius": "20px",
+                        fontFamily:props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.title_font ? props.getPublicLinkRes.data.settings.appearance.title_font+",monospace !important" : "",
+                    }}>
                     {
                     el.title
                 }</p>
@@ -699,10 +722,15 @@ console.log("data: ",props.getPublicLinkRes.data);
                     }`
                 }
                 target="_blank">
-                <p className='add_new_link_btn '
+                <p className={`add_new_link_btn   
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "uppercase"  ? "pub-link-title" : "none"}
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "lowercase"  ? "pub-link-title1" : "none"}
+                ${props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.font_case === "capitalize"  ? "pub-link-title2" : "none"}
+                `}
                     style={ 
-                        {"borderRadius": "20px"}
-                }>
+                        {"borderRadius": "20px",
+                        fontFamily:props.getPublicLinkRes && props.getPublicLinkRes.data.settings.appearance && props.getPublicLinkRes.data.settings.appearance.title_font ? props.getPublicLinkRes.data.settings.appearance.title_font+",monospace !important" : "",
+                    }}>
                     {
                     el.title
                 }</p>
